@@ -55,4 +55,13 @@ class BcryptHasher
         $needsRehash = password_needs_rehash($hashedValue, PASSWORD_BCRYPT, $optionsBag->toArray());
         return $needsRehash;
     }
+
+    /**
+     * @param string $hashedValue
+     * @return array
+     */
+    public function info($hashedValue)
+    {
+        return password_get_info($hashedValue);
+    }
 }
