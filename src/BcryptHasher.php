@@ -2,6 +2,8 @@
 
 namespace VKR\SymfonyLaravelBCryptBridge;
 
+use RuntimeException;
+
 class BcryptHasher
 {
     private const SALT = '';
@@ -19,13 +21,13 @@ class BcryptHasher
      * @param array $options
      * @return string
      */
-    public function make($value, array $options = [])
+    public function make(string $value, array $options = []): string
     {
         $optionsBag = new OptionsBag($options);
         $encoder = $this->symfonyEncoderWrapper->getEncoder($optionsBag);
         $hash = $encoder->encodePassword($value, self::SALT);
-        if ($hash === false) {
-            throw new \RuntimeException('BCrypt is not supported on this server');
+        if (!$hash) {
+            throw new RuntimeException('BCrypt is not supported on this server');
         }
         return $hash;
     }
@@ -36,7 +38,7 @@ class BcryptHasher
      * @param array $options
      * @return bool
      */
-    public function check($value, $hashedValue, array $options = [])
+    public function check(string $value, string $hashedValue, array $options = []): bool
     {
         $optionsBag = new OptionsBag($options);
         $encoder = $this->symfonyEncoderWrapper->getEncoder($optionsBag);
@@ -49,7 +51,7 @@ class BcryptHasher
      * @param array $options
      * @return bool
      */
-    public function needsRehash($hashedValue, array $options = [])
+    public function needsRehash(string $hashedValue, array $options = []): bool
     {
         $optionsBag = new OptionsBag($options);
         $needsRehash = password_needs_rehash($hashedValue, PASSWORD_BCRYPT, $optionsBag->toArray());
@@ -60,7 +62,7 @@ class BcryptHasher
      * @param string $hashedValue
      * @return array
      */
-    public function info($hashedValue)
+    public function info(string $hashedValue): array
     {
         return password_get_info($hashedValue);
     }

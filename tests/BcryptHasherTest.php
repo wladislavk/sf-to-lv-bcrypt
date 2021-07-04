@@ -16,7 +16,7 @@ class BcryptHasherTest extends TestCase
     /** @var BcryptHasher */
     private $bcryptHasher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $symfonyEncoderWrapper = new SymfonyEncoderWrapper();
         $this->bcryptHasher = new BcryptHasher($symfonyEncoderWrapper);
@@ -26,7 +26,7 @@ class BcryptHasherTest extends TestCase
     {
         $hash = $this->bcryptHasher->make(self::RIGHT_PASSWORD);
         $needsRehash = $this->bcryptHasher->needsRehash($hash);
-        $this->assertFalse($needsRehash);
+        $this->assertTrue($needsRehash);
         $isHashCorrect = $this->bcryptHasher->check(self::RIGHT_PASSWORD, $hash);
         $this->assertTrue($isHashCorrect);
     }

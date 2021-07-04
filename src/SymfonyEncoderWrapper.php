@@ -2,17 +2,17 @@
 
 namespace VKR\SymfonyLaravelBCryptBridge;
 
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 class SymfonyEncoderWrapper
 {
     /**
      * @param OptionsBag $optionsBag
-     * @return BCryptPasswordEncoder
+     * @return NativePasswordEncoder
      */
-    public function getEncoder(OptionsBag $optionsBag): BCryptPasswordEncoder
+    public function getEncoder(OptionsBag $optionsBag): NativePasswordEncoder
     {
-        $encoder = new BCryptPasswordEncoder($optionsBag->getRounds());
+        $encoder = new NativePasswordEncoder($optionsBag->getRounds());
         return $encoder;
     }
 }
