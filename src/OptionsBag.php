@@ -5,9 +5,13 @@ namespace VKR\SymfonyLaravelBCryptBridge;
 class OptionsBag
 {
     private const DEFAULT_ROUNDS = 10;
+    private const DEFAULT_COST = 10;
 
     /** @var int */
     private $rounds = self::DEFAULT_ROUNDS;
+
+    /** @var int */
+    private $cost = self::DEFAULT_COST;
 
     /**
      * OptionsBag constructor.
@@ -17,6 +21,9 @@ class OptionsBag
     {
         if (isset($options['rounds'])) {
             $this->rounds = $options['rounds'];
+        }
+        if (isset($options['cost'])) {
+            $this->cost = $options['cost'];
         }
     }
 
@@ -37,10 +44,28 @@ class OptionsBag
     }
 
     /**
+     * @param int $cost
+     */
+    public function setCost(int $cost): void
+    {
+        $this->cost = $cost;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCost(): int
+    {
+        return $this->cost;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
     {
-        return ['cost' => $this->rounds];
+        return [
+            'cost' => $this->cost,
+        ];
     }
 }

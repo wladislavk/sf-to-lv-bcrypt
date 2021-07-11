@@ -12,7 +12,7 @@ class SymfonyEncoderWrapper
      */
     public function getEncoder(OptionsBag $optionsBag): NativePasswordEncoder
     {
-        $encoder = new NativePasswordEncoder($optionsBag->getRounds());
+        $encoder = new NativePasswordEncoder($optionsBag->getRounds(), null, $optionsBag->getCost());
         return $encoder;
     }
 }

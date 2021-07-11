@@ -26,15 +26,15 @@ class BcryptHasherTest extends TestCase
     {
         $hash = $this->bcryptHasher->make(self::RIGHT_PASSWORD);
         $needsRehash = $this->bcryptHasher->needsRehash($hash);
-        $this->assertTrue($needsRehash);
+        $this->assertFalse($needsRehash);
         $isHashCorrect = $this->bcryptHasher->check(self::RIGHT_PASSWORD, $hash);
         $this->assertTrue($isHashCorrect);
     }
 
     public function testWithWrongCost()
     {
-        $options = ['rounds' => self::RIGHT_COST];
-        $newOptions = ['rounds' => self::WRONG_COST];
+        $options = ['rounds' => self::RIGHT_COST, 'cost' => self::RIGHT_COST];
+        $newOptions = ['rounds' => self::WRONG_COST, 'cost' => self::WRONG_COST];
         $hash = $this->bcryptHasher->make(self::RIGHT_PASSWORD, $options);
         $needsRehash = $this->bcryptHasher->needsRehash($hash, $newOptions);
         $this->assertTrue($needsRehash);
